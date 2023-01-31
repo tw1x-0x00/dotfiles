@@ -1,6 +1,7 @@
 ! tw1x .Xdefaults
 
-urxvt*font:				xft:MesloLGS NF:size=11
+!urxvt*font:			xft:MesloLGS NF:size=11
+urxvt*font:				xft:Hack Nerd Font:style=Regular:size=11
 
 Xft*dpi:				96
 Xft*antialias:			true
@@ -23,7 +24,7 @@ urxvt*color13:			#cf9ebe
 urxvt*color14:			#71bebe
 urxvt*color15:			#ffffff
 
-urxvt*termName:			rxvt
+urxvt*termName:			rxvt-unicode-256color
 urxvt*scrollBar:		false
 urxvt*foreground:		#cccccc
 urxvt*background:		rgba:0000/0000/0000/cccc

@@ -13,7 +13,8 @@ bindsym $mod+Shift+z    gaps outer current minus 5
 set $mod Mod4
 
 #set font
-font pango:MesloLGS 10
+font pango:Hack Nerd Font 12
+#font pango:MesloLGS 10
 
 #use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -78,28 +79,28 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 #switch to workspace
-bindsym $mod+1 workspace Terminals 
-bindsym $mod+2 workspace Browser 
-bindsym $mod+3 workspace E-Mail 
-bindsym $mod+4 workspace TV 
-bindsym $mod+5 workspace Music 
-bindsym $mod+6 workspace FileManager 
-bindsym $mod+7 workspace IRC 
-bindsym $mod+8 workspace Random
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace 1 
+bindsym $mod+2 workspace 2 
+bindsym $mod+3 workspace 3 
+bindsym $mod+4 workspace 3 
+bindsym $mod+5 workspace 4 
+bindsym $mod+6 workspace 5 
+bindsym $mod+7 workspace 6 
+bindsym $mod+8 workspace 7
+bindsym $mod+9 workspace 8
+bindsym $mod+0 workspace 9
 
 #move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace Terminals 
-bindsym $mod+Shift+2 move container to workspace Browser 
-bindsym $mod+Shift+3 move container to workspace E-Mail 
-bindsym $mod+Shift+4 move container to workspace TV 
-bindsym $mod+Shift+5 move container to workspace Music 
-bindsym $mod+Shift+6 move container to workspace FileManager 
-bindsym $mod+Shift+7 move container to workspace IRC 
-bindsym $mod+Shift+8 move container to workspace Random
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace 1 
+bindsym $mod+Shift+2 move container to workspace 2 
+bindsym $mod+Shift+3 move container to workspace 3 
+bindsym $mod+Shift+4 move container to workspace 3 
+bindsym $mod+Shift+5 move container to workspace 4 
+bindsym $mod+Shift+6 move container to workspace 5 
+bindsym $mod+Shift+7 move container to workspace 6 
+bindsym $mod+Shift+8 move container to workspace 7
+bindsym $mod+Shift+9 move container to workspace 8
+bindsym $mod+Shift+0 move container to workspace 9
 
 #reload the configuration file
 bindsym $mod+Shift+c reload
@@ -112,7 +113,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 #resize window (you can also use the mouse for that)
 mode "resize" {
-	#phese bindings trigger as soon as you enter the resize mode
+	#these bindings trigger as soon as you enter the resize mode
 	#pressing left will shrink the window’s width.
 	#pressing right will grow the window’s width.
 	#pressing up will shrink the window’s height.
@@ -155,14 +156,20 @@ bar{
 
 #start bumblebee-status bar
 #bar{
-#	status_command /usr/bin/bumblebee-status \
-#		-m time \
-#		-p time.format="%H:%M CW %V" \
-#		-t night-powerline
+#	font pango:Hack Nerd Font 12
+#	status_command /usr/bin/bumblebee-status -m cpu load memory disk datetime twmn -p disk.open= datetime.format="%a %d.%m.%Y %H:%M:%S" -t night-powerline
+#	tray_output primary
+#	position top
+#	i3bar_command i3bar --transparency
+#	colors{
+#		background #00000000
+#		statusline #FFFFFF
+#
+#	}
 #}
 
 #set display hdmi-0
-exec xrandr --output HDMI-0 --mode 1920x1080
+#exec xrandr --output HDMI-0 --mode 1920x1080
 
 #lock screen
 bindsym $mod+F9 exec i3lock -c 000000 -i /home/tw1x/Pictures/wallpaper.jpg
@@ -172,20 +179,22 @@ bindsym $mod+F9 exec i3lock -c 000000 -i /home/tw1x/Pictures/wallpaper.jpg
 #for_window [class="Pavucontrol"] resize shrink left 100, resize shrink right 100, resize shrink down 50, resize shrink up 50
 
 #assign programs to specific workspace
-assign [class="Chromium"] Browser 
-assign [class="Thunar"] FileManager 
+assign [class="Chromium"] 2 
+assign [class="Thunar"] 5 
 
 #pulse audio controls
 bindsym $mod+F12 exec pamixer -i 5
 bindsym $mod+F11 exec pamixer -d 5
 bindsym $mod+shift+F12 exec pamixer --set-volume 0
 
+#start NetworkManager
+exec --no-startup-id nm-applet
+
+#start 
+exec --no-startup-id twmnd
+
 #set wallpaper
 exec_always feh --bg-scale --randomize /home/tw1x/Pictures/wallpaper.jpg
-
-#auto exec settings
-#exec chromium
-#exec urxvt
 
 #program exec
 bindsym $mod+F5 exec pavucontrol
