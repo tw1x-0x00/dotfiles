@@ -1,0 +1,185 @@
+# tw1x i3 config file
+
+#hide_edge_borders both
+for_window [class="^.*"] border pixel 2
+
+#needed for i3-gaps
+gaps outer 3
+gaps inner 15
+
+bindsym $mod+z      gaps outer current plus 5
+bindsym $mod+Shift+z    gaps outer current minus 5
+
+set $mod Mod4
+
+#set font
+font pango:MesloLGS 10
+
+#use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+#start terminal
+bindsym $mod+Return exec urxv
+
+#kill focused window
+bindsym $mod+Shift+q kill
+
+#start dmenu
+bindsym $mod+d exec dmenu_run
+
+#change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+#alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+#move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+#alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#split horizontal
+bindsym $mod+h split h
+
+#split vertical
+bindsym $mod+v split v
+
+#fullscreen
+bindsym $mod+f fullscreen toggle
+
+#change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+#toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+#change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+#focus the parent container
+bindsym $mod+a focus parent
+
+#switch to workspace
+bindsym $mod+1 workspace Terminals 
+bindsym $mod+2 workspace Browser 
+bindsym $mod+3 workspace E-Mail 
+bindsym $mod+4 workspace TV 
+bindsym $mod+5 workspace Music 
+bindsym $mod+6 workspace FileManager 
+bindsym $mod+7 workspace IRC 
+bindsym $mod+8 workspace Random
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+#move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace Terminals 
+bindsym $mod+Shift+2 move container to workspace Browser 
+bindsym $mod+Shift+3 move container to workspace E-Mail 
+bindsym $mod+Shift+4 move container to workspace TV 
+bindsym $mod+Shift+5 move container to workspace Music 
+bindsym $mod+Shift+6 move container to workspace FileManager 
+bindsym $mod+Shift+7 move container to workspace IRC 
+bindsym $mod+Shift+8 move container to workspace Random
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+#reload the configuration file
+bindsym $mod+Shift+c reload
+
+#restart i3 inplace
+bindsym $mod+Shift+r restart
+
+#exit i3
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+#resize window (you can also use the mouse for that)
+mode "resize" {
+	#phese bindings trigger as soon as you enter the resize mode
+	#pressing left will shrink the window’s width.
+	#pressing right will grow the window’s width.
+	#pressing up will shrink the window’s height.
+	#pressing down will grow the window’s height.
+	bindsym j resize shrink width 10 px or 10 ppt
+	bindsym k resize grow height 10 px or 10 ppt
+	bindsym l resize shrink height 10 px or 10 ppt
+	bindsym semicolon resize grow width 10 px or 10 ppt
+
+	#same bindings, but for the arrow keys
+	bindsym Left resize shrink width 10 px or 10 ppt
+	bindsym Down resize grow height 10 px or 10 ppt
+	bindsym Up resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow width 10 px or 10 ppt
+
+	#back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+#color settings
+set $bg-color				#2f343f
+set $inactive-bg-color		#2f343f
+set $text-color				#f3f4f5
+set $inactive-text-color	#676E7D
+set $urgent-bg-color		#E53935
+
+#                       border              background         text                 indicator
+client.focused          $bg-color           $bg-color          $text-color          #424242
+client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color #424242
+client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #424242
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #424242
+
+#start i3bar
+bar{
+	status_command /usr/bin/bumblebee-status \
+		-m time \
+		-p time.format="%H:%M CW %V" \
+		-t night-powerline
+}
+
+#set display hdmi-0
+exec xrandr --output HDMI-0 --mode 1920x1080
+
+#lock screen
+bindsym $mod+F9 exec i3lock -c 000000 -i /home/tw1x/Pictures/wallpaper.jpg
+
+#floating programs
+#for_window [class="Pavucontrol"] floating enable
+#for_window [class="Pavucontrol"] resize shrink left 100, resize shrink right 100, resize shrink down 50, resize shrink up 50
+
+#assign programs to specific workspace
+assign [class="Chromium"] Browser 
+assign [class="Thunar"] FileManager 
+
+#pulse audio controls
+bindsym $mod+F12 exec pamixer -i 5
+bindsym $mod+F11 exec pamixer -d 5
+bindsym $mod+shift+F12 exec pamixer --set-volume 0
+
+#set wallpaper
+exec_always feh --bg-scale --randomize /home/tw1x/Pictures/wallpaper.jpg
+
+#auto exec settings
+#exec chromium
+#exec urxvt
+
+#program exec
+bindsym $mod+F5 exec pavucontrol
+bindsym $mod+F6 exec thunar
+bindsym $mod+F8 exec xfce4-screenshooter

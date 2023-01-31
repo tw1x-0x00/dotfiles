@@ -1,4 +1,6 @@
-" Basic Setup
+"tw1x vim config
+
+"basic setup
 syntax on
 set encoding=utf-8
 set number
@@ -11,10 +13,10 @@ set modeline
 set t_Co=256
 filetype on
 
-" Set python syntax highlighting
+"set python syntax highlighting
 let python_highlight_all=1
 
-" Set PEP8 indentation for python
+"set PEP8 indentation for python
 au BufNewFile,BufRead *.py\
     \ set tabstop=4
     \ set softtabstop=4
@@ -24,7 +26,7 @@ au BufNewFile,BufRead *.py\
     \ set autoindent
     \ set fileformat=unix
 
-" Statusline configuration
+"statusline configuration
 set laststatus=2
 set statusline=%F
 set statusline+=%r
@@ -50,7 +52,7 @@ set statusline+=%L
 set statusline+=\ 
 set statusline+=%p%%
 
-" Default GUI Colours
+"default GUI colors
 let s:foreground       = "bbbbbb"
 let s:background       = "151515"
 let s:selection        = "505050"
@@ -78,7 +80,7 @@ let s:statusline_bg    = "333333"
 let s:statusline_fg    = "888888"
 let s:cursor_bg        = "555555"
 
-" Console 256 Colours
+"console 256 colours
 if !has("gui_running")
 	let s:background  = "000000"
 	let s:window      = "151515"
@@ -91,7 +93,7 @@ hi clear
 syntax reset
 
 if has("gui_running") || &t_Co == 88 || &t_Co == 256
-  " Returns an approximate grey index for the given grey level
+  "returns an approximate grey index for the given grey level
   fun <SID>grey_number(x)
     if &t_Co == 88
       if a:x < 23
@@ -130,7 +132,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     endif
   endfun
 
-  " Returns the actual grey level represented by the grey index
+  "returns the actual grey level represented by the grey index
   fun <SID>grey_level(n)
     if &t_Co == 88
       if a:n == 0
@@ -163,7 +165,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     endif
   endfun
 
-  " Returns the palette index for the given grey index
+  "returns the palette index for the given grey index
   fun <SID>grey_colour(n)
     if &t_Co == 88
       if a:n == 0
@@ -184,7 +186,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     endif
   endfun
 
-  " Returns an approximate colour index for the given colour level
+  "returns an approximate color index for the given color level
   fun <SID>rgb_number(x)
     if &t_Co == 88
       if a:x < 69
@@ -211,7 +213,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     endif
   endfun
 
-  " Returns the actual colour level for the given colour index
+  "returns the actual color level for the given color index
   fun <SID>rgb_level(n)
     if &t_Co == 88
       if a:n == 0
@@ -232,7 +234,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     endif
   endfun
 
-  " Returns the palette index for the given R/G/B colour indices
+  "returns the palette index for the given R/G/B color indices
   fun <SID>rgb_colour(x, y, z)
     if &t_Co == 88
       return 16 + (a:x * 16) + (a:y * 4) + a:z
@@ -241,14 +243,14 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     endif
   endfun
 
-  " Returns the palette index to approximate the given R/G/B colour levels
+  "returns the palette index to approximate the given R/G/B colour levels
   fun <SID>colour(r, g, b)
-    " Get the closest grey
+    "get the closest grey
     let l:gx = <SID>grey_number(a:r)
     let l:gy = <SID>grey_number(a:g)
     let l:gz = <SID>grey_number(a:b)
 
-    " Get the closest colour
+    "get the closest color
     let l:x = <SID>rgb_number(a:r)
     let l:y = <SID>rgb_number(a:g)
     let l:z = <SID>rgb_number(a:b)
@@ -264,19 +266,19 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
       let l:db = <SID>rgb_level(l:gz) - a:b
       let l:drgb = (l:dr * l:dr) + (l:dg * l:dg) + (l:db * l:db)
       if l:dgrey < l:drgb
-        " Use the grey
+        "use the grey
         return <SID>grey_colour(l:gx)
       else
-        " Use the colour
+        "use the color
         return <SID>rgb_colour(l:x, l:y, l:z)
       endif
     else
-      " Only one possibility
+      "only one possibility
       return <SID>rgb_colour(l:x, l:y, l:z)
     endif
   endfun
 
-  " Returns the palette index to approximate the 'rrggbb' hex string
+  "returns the palette index to approximate the 'rrggbb' hex string
   fun <SID>rgb(rgb)
     let l:r = ("0x" . strpart(a:rgb, 0, 2)) + 0
     let l:g = ("0x" . strpart(a:rgb, 2, 2)) + 0
@@ -285,7 +287,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     return <SID>colour(l:r, l:g, l:b)
   endfun
 
-  " Sets the highlighting for the given group
+  "sets the highlighting for the given group
   fun <SID>X(group, fg, bg, attr)
     if a:fg != ""
       exec "hi " . a:group . " guifg=#" . a:fg . " ctermfg=" . <SID>rgb(a:fg)
@@ -298,7 +300,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     endif
   endfun
 
-  "UI Highlighting
+  "UI highlighting
   call <SID>X("Normal", s:foreground, s:background, "none")
   call <SID>X("LineNr", s:linenr_fg, s:linenr_bg, "")
   call <SID>X("NonText", s:non_text, "", "")
@@ -334,7 +336,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     call <SID>X("ColorColumn", "", s:line, "none")
   end
 
-  " Standard Highlighting
+  "standard highlighting
   call <SID>X("Comment", s:comment, "", "")
   call <SID>X("Todo", s:red, s:background, "bold")
   call <SID>X("Title", s:comment, "", "")
@@ -370,7 +372,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("Debug", s:orange, "", "")
   call <SID>X("Global", s:blue, "", "")
 
-  " Vim Highlighting
+  "vim highlighting
   call <SID>X("vimCommand", s:red, "", "none")
   call <SID>X("vimVar", s:blue, "", "")
   call <SID>X("vimFuncKey", s:lyme, "", "")
@@ -391,7 +393,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("vimNotation", s:aqua, "", "")
   call <SID>X("vimOper", s:foreground, "", "")
 
-  " Makefile Highlighting
+  "makefile highlighting
   call <SID>X("makeIdent", s:blue, "", "")
   call <SID>X("makeSpecTarget", s:olive, "", "")
   call <SID>X("makeTarget", s:red, "", "")
@@ -399,13 +401,13 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("makeCommands", s:foreground, "", "")
   call <SID>X("makeSpecial", s:orange, "", "bold")
 
-  " CMake Highlighting
+  "cmake highlighting
   call <SID>X("cmakeStatement", s:lyme, "", "")
   call <SID>X("cmakeArguments", s:foreground, "", "")
   call <SID>X("cmakeVariableValue", s:blue, "", "")
   call <SID>X("cmakeOperators", s:red, "", "")
 
-  " C Highlighting
+  "c highlighting
   call <SID>X("cType", s:blue, "", "")
   call <SID>X("cFormat", s:olive, "", "")
   call <SID>X("cBoolean", s:green, "", "")
@@ -426,7 +428,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("cCustomParen", s:foreground, "", "")
   call <SID>X("cOctalZero", s:purple, "", "bold")
 
-  " CPP highlighting
+  "cpp highlighting
   call <SID>X("cppBoolean", s:peach, "", "")
   call <SID>X("cppSTLnamespace", s:purple, "", "")
   call <SID>X("cppSTLconstant", s:foreground, "", "")
@@ -439,7 +441,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("cppStorageClass", s:peach, "", "bold")
   call <SID>X("cppAccess",s:blue, "", "")
 
-  " Lex highlighting
+  "lex highlighting
   call <SID>X("lexCFunctions", s:foreground, "", "")
   call <SID>X("lexAbbrv", s:purple, "", "")
   call <SID>X("lexAbbrvRegExp", s:aqua, "", "")
@@ -456,7 +458,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("lexOptions", s:olive, "", "bold")
   call <SID>X("lexPatString", s:olive, "", "")
 
-  " Yacc highlighting
+  "yacc highlighting
   call <SID>X("yaccNonterminal", s:peach, "", "")
   call <SID>X("yaccDelim", s:orange, "", "")
   call <SID>X("yaccInitKey", s:aqua, "", "")
@@ -464,7 +466,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("yaccKey", s:purple, "", "")
   call <SID>X("yaccVar", s:aqua, "", "")
 
-  " NASM highlighting
+  "nasm highlighting
   call <SID>X("nasmStdInstruction", s:peach, "", "")
   call <SID>X("nasmGen08Register", s:aqua, "", "")
   call <SID>X("nasmGen16Register", s:aqua, "", "")
@@ -476,7 +478,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("nasmDirective", s:blue, "", "bold")
   call <SID>X("nasmLocalLabel", s:orange, "", "")
 
-  " GAS highlighting
+  "gas highlighting
   call <SID>X("gasSymbol", s:lyme, "", "")
   call <SID>X("gasDirective", s:blue, "", "bold")
   call <SID>X("gasOpcode_386_Base", s:peach, "", "")
@@ -486,13 +488,13 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("gasOpcode_P6_Base", s:peach, "", "")
   call <SID>X("gasDirectiveStore", s:foreground, "", "bold")
 
-  " MIPS highlighting
+  "mips highlighting
   call <SID>X("mipsInstruction", s:lyme, "", "")
   call <SID>X("mipsRegister", s:peach, "", "")
   call <SID>X("mipsLabel", s:aqua, "", "bold")
   call <SID>X("mipsDirective", s:purple, "", "bold")
 
-  " PHP Highlighting
+  "php highlighting
   call <SID>X("phpVarSelector", s:yellow, "", "")
   call <SID>X("phpKeyword", s:yellow, "", "")
   call <SID>X("phpIdentifier", s:blue, "", "")
@@ -517,7 +519,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("phpIntVar", s:aqua, "", "")
   call <SID>X("phpCoreConstant", s:aqua, "", "")
 
-  " Ruby Highlighting
+  "ruby highlighting
   call <SID>X("rubySymbol", s:green, "", "")
   call <SID>X("rubyConstant", s:yellow, "", "")
   call <SID>X("rubyAttribute", s:blue, "", "")
@@ -529,7 +531,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("rubyConditional", s:purple, "", "")
   call <SID>X("rubyRepeat", s:purple, "", "")
 
-  " Python Highlighting
+  "python highlighting
   call <SID>X("pythonInclude", s:purple, "", "")
   call <SID>X("pythonConditional", s:blue, "", "")
   call <SID>X("pythonRepeat", s:yellow, "", "")
@@ -537,7 +539,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("pythonStatement", s:yellow, "", "")
   call <SID>X("pythonImport", s:red, "", "")
 
-  " Go Highlighting
+  "go highlighting
   call <SID>X("goStatement", s:purple, "", "")
   call <SID>X("goConditional", s:purple, "", "")
   call <SID>X("goRepeat", s:purple, "", "")
@@ -546,11 +548,11 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("goConstants", s:yellow, "", "")
   call <SID>X("goBuiltins", s:orange, "", "")
 
-  " CoffeeScript Highlighting
+  "coffeescript highlighting
   call <SID>X("coffeeKeyword", s:purple, "", "")
   call <SID>X("coffeeConditional", s:blue, "", "")
 
-  " JavaScript Highlighting
+  "javascript highlighting
   call <SID>X("javaScriptBraces", s:foreground, "", "")
   call <SID>X("javaScriptFunction", s:red, "", "")
   call <SID>X("javaScriptConditional", s:purple, "", "")
@@ -559,7 +561,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("javaScriptMember", s:orange, "", "")
   call <SID>X("javaScriptGlobal", s:yellow, "", "")
 
-  " for https://github.com/pangloss/vim-javascript
+  "for https://github.com/pangloss/vim-javascript
   call <SID>X("jsModules", s:red, "", "")
   call <SID>X("jsModuleWords", s:red, "", "")
   call <SID>X("jsFunction", s:red, "", "")
@@ -568,13 +570,13 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("jsOperatorWords", s:blue, "", "")
   call <SID>X("jsKeyword", s:blue, "", "")
 
-  " HTML Highlighting
+  "html highlighting
   call <SID>X("htmlTag", s:red,"","")
   call <SID>X("htmlTagName", s:red,"","")
   call <SID>X("htmlArg", s:red,"","")
   call <SID>X("htmlScriptTag", s:red,"","")
 
-  " Shell/Bash highlighting
+  "shell/bash highlighting
   call <SID>X("bashStatement", s:lightblue, "", "bold")
   call <SID>X("shDerefVar", s:aqua, "", "bold")
   call <SID>X("shDerefSimple", s:aqua, "", "")
@@ -590,7 +592,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("shCase", s:peach, "", "")
   call <SID>X("shSetList", s:peach, "", "")
 
-  " Diff Highlighting
+  "diff highlighting
   let s:diffbackground = "494e56"
 
   call <SID>X("diffAdded", s:green, "", "")
@@ -600,13 +602,13 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("DiffChange", s:yellow, s:diffbackground, "")
   call <SID>X("DiffText", s:diffbackground, s:orange, "")
 
-  " ShowMarks Highlighting
+  "showmarks highlighting
   call <SID>X("ShowMarksHLl", s:orange, s:background, "none")
   call <SID>X("ShowMarksHLo", s:purple, s:background, "none")
   call <SID>X("ShowMarksHLu", s:yellow, s:background, "none")
   call <SID>X("ShowMarksHLm", s:aqua, s:background, "none")
 
-  " Delete Functions
+  "delete functions
   delf <SID>X
   delf <SID>rgb
   delf <SID>colour
