@@ -147,11 +147,16 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 
 #start i3bar
 bar{
-	status_command /usr/bin/bumblebee-status \
-		-m time \
-		-p time.format="%H:%M CW %V" \
-		-t night-powerline
+	status_command i3status
 }
+
+#start bumblebee-status bar
+#bar{
+#	status_command /usr/bin/bumblebee-status \
+#		-m time \
+#		-p time.format="%H:%M CW %V" \
+#		-t night-powerline
+#}
 
 #set display hdmi-0
 exec xrandr --output HDMI-0 --mode 1920x1080
