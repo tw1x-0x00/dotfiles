@@ -194,11 +194,17 @@ bindsym $mod+shift+F12 exec pamixer --set-volume 0
 #start NetworkManager
 exec --no-startup-id nm-applet
 
-#start 
+#star blueman
+exec --no-startup-id blueman-applet
+
+#start twmn
 exec --no-startup-id twmnd
 
+#start volumeico
+exec --no-startup-id volumeicon
+
 #set wallpaper
-exec_always feh --bg-scale --randomize /home/tw1x/Pictures/wallpaper.jpg
+exec_always feh --bg-scale --randomize /home/tw1x/Pictures/wallpapers/
 
 #program exec
 bindsym $mod+F5 exec pavucontrol
