@@ -201,7 +201,7 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id twmnd
 
 #start volumeico
-exec --no-startup-id volumeicon
+exec --no-startup-id sleep 5 && volumeicon
 
 #set wallpaper
 exec_always feh --bg-scale --randomize /home/tw1x/Pictures/wallpapers/
