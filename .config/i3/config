@@ -151,18 +151,7 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 
 #start i3bar
 bar{
-	font pango:Hack Nerd Font 12
 	status_command i3status
-	tray_output primary
-	position top
-	i3bar_command i3bar
-	colors{
-		background #000000
-		statusline #ffffff
-		focused_workspace   #2f343f #2f343f #f3f4f5
-		active_workspace    #333333 #333333 #888888
-		inactive_workspace  #2f343f #000000 #676e7d
-		urgent_workspace    #e53953 #e53953 #f3f4f5
 }		
 
 #start bumblebee-status bar
