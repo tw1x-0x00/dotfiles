@@ -20,7 +20,7 @@ font pango:Hack Nerd Font 12
 floating_modifier $mod
 
 #start terminal
-bindsym $mod+Return exec urxv
+bindsym $mod+Return exec urxvt
 
 #kill focused window
 bindsym $mod+Shift+q kill
