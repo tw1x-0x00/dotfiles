@@ -1,6 +1,6 @@
 ! tw1x .Xdefaults
 
-urxvt*font:					xft:Hack Nerd Font:style=Regular:size=11
+urxvt*font:					xft:MesloLGS NF:size=11, xft:Noto Color Emoji:style=regular:size=5
 urxvt*termName:				rxvt-unicode-256color
 urxvt*foreground:			#cccccc
 urxvt*scrollBar:			false

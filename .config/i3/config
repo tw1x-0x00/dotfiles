@@ -26,10 +26,10 @@ bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+q kill
 
 #start dmenu
-bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec dmenu_run
 
 #start rofi
-#bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+d exec --no-startup-id rofi -show drun
 
 #change focus
 bindsym $mod+j focus left
@@ -86,9 +86,9 @@ bindsym $mod+4 workspace 3 
 bindsym $mod+5 workspace 4  
 bindsym $mod+6 workspace 5  
 bindsym $mod+7 workspace 6  
-bindsym $mod+8 workspace Browser 
-bindsym $mod+9 workspace Email 
-bindsym $mod+0 workspace Files 
+bindsym $mod+8 workspace Browser  
+bindsym $mod+9 workspace Email  
+bindsym $mod+0 workspace Files  
 
 #move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1  
@@ -150,29 +150,29 @@ client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-co
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #424242
 
 #start i3bar
-bar{
-	status_command i3status
-}		
-
-#start bumblebee-status bar
 #bar{
-#	font pango:Hack Nerd Font 12
-#	status_command /usr/bin/bumblebee-status -m cpu load memory disk datetime twmn -p disk.open= datetime.format="%a %d.%m.%Y %H:%M:%S" -t night-powerline
-#	tray_output primary
-#	position top
-#	i3bar_command i3bar --transparency
-#	colors{
-#		background #00000000
-#		statusline #ffffff
-#		focused_workspace	#2f343f #2f343f #f3f4f5
-#		active_workspace	#333333 #333333 #888888
-#		inactive_workspace	#2f343f #000000 #676e7d
-#		urgent_workspace	#e53953 #e53953 #f3f4f5
-#	}
+#	status_command i3status
 #}
 
+#start bumblebee-status bar
+bar{
+	font pango:Hack Nerd Font 12
+	status_command /usr/bin/bumblebee-status -m cpu load memory nic battery datetime -p disk.open= battery.decorate=true datetime.format="%a %d.%m.%Y %H:%M:%S" -t night-powerline
+	tray_output primary
+	position top
+	i3bar_command i3bar --transparency
+	colors{
+		background #00000000
+		statusline #ffffff
+		focused_workspace	#2f343f #2f343f #f3f4f5
+		active_workspace	#333333 #333333 #888888
+		inactive_workspace	#2f343f #000000 #676e7d
+		urgent_workspace	#e53953 #e53953 #f3f4f5
+	}
+}
+
 #set display hdmi-0
-#exec xrandr --output HDMI-0 --mode 1920x1080
+exec xrandr --output HDMI-1 --mode 1920x1080 --left-of eDP-1
 
 #lock screen
 bindsym $mod+F9 exec i3lock -c 000000 -i /home/tw1x/Pictures/wallpaper.jpg
@@ -194,17 +194,17 @@ bindsym $mod+shift+F12 exec pamixer --set-volume 0
 #start NetworkManager
 exec --no-startup-id nm-applet
 
-#star blueman
-exec --no-startup-id blueman-applet
+#start blueman
+#exec --no-startup-id blueman-applet
 
 #start twmn
 exec --no-startup-id twmnd
 
-#start volumeico
-exec --no-startup-id sleep 5 && volumeicon
+#start volumeicon
+exec --no-startup-id sleep 10 && volumeicon
 
 #set wallpaper
-exec_always feh --bg-scale --randomize /home/tw1x/Pictures/wallpapers/
+exec_always feh --bg-scale --randomize /home/tw1x/Pictures/wallpaper.jpg
 
 #program exec
 bindsym $mod+F5 exec pavucontrol
