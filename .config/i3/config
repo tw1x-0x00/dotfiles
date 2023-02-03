@@ -191,6 +191,9 @@ bindsym $mod+F12 exec pamixer -i 5
 bindsym $mod+F11 exec pamixer -d 5
 bindsym $mod+shift+F12 exec pamixer --set-volume 0
 
+#disable screensaver
+exec xset -dpms s off
+
 #start NetworkManager
 exec --no-startup-id nm-applet
 
