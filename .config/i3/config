@@ -87,7 +87,7 @@ bindsym $mod+5 workspace 4 
 bindsym $mod+6 workspace 5  
 bindsym $mod+7 workspace 6  
 bindsym $mod+8 workspace Browser  
-bindsym $mod+9 workspace Email  
+bindsym $mod+9 workspace Mail  
 bindsym $mod+0 workspace Files  
 
 #move focused container to workspace
@@ -99,7 +99,7 @@ bindsym $mod+Shift+5 move container to workspace 4 
 bindsym $mod+Shift+6 move container to workspace 5  
 bindsym $mod+Shift+7 move container to workspace 6  
 bindsym $mod+Shift+8 move container to workspace Browser  
-bindsym $mod+Shift+9 move container to workspace Email  
+bindsym $mod+Shift+9 move container to workspace Mail  
 bindsym $mod+Shift+0 move container to workspace Files 
 
 #reload the configuration file
@@ -178,13 +178,13 @@ exec xrandr --output HDMI-1 --mode 1920x1080 --left-of eDP-1
 bindsym $mod+F9 exec i3lock -c 000000 -i /home/tw1x/Pictures/wallpaper.jpg
 
 #floating programs
-#for_window [class="Pavucontrol"] floating enable
-#for_window [class="Pavucontrol"] resize shrink left 100, resize shrink right 100, resize shrink down 50, resize shrink up 50
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Pavucontrol"] resize shrink left 100, resize shrink right 100, resize shrink down 50, resize shrink up 50
 
 #assign programs to specific workspace
 assign [class="Chromium"] Browser  
 assign [class="Thunar"] Files  
-assign [class="Thunderbird"] Email  
+assign [class="thunderbird"] Mail  
 
 #pulse audio controls
 bindsym $mod+F12 exec pamixer -i 5
