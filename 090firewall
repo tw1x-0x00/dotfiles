@@ -1,0 +1,49 @@
+#!/bin/sh
+set -e
+
+#tw1x "stealth" firewall
+#copy to /etc/network/if-up.d/
+
+#do nothing for loopback interface
+[ "$IFACE" != "lo" ] || exit 0
+
+IPTABLES="/sbin/iptables"
+IP6TABLES="/sbin/ip6tables"
+
+#delete old configuration
+$IPTABLES --flush
+$IPTABLES --delete-chain
+$IPTABLES -t mangle --flush
+$IPTABLES -t mangle --delete-chain
+$IPTABLES -t nat --flush
+$IPTABLES -t nat --delete-chain
+
+#deactivate forwarding
+echo 0 > /proc/sys/net/ipv4/ip_forward
+
+#set default policies
+$IPTABLES -P INPUT DROP
+$IPTABLES -P FORWARD DROP
+$IPTABLES -P OUTPUT ACCEPT
+
+#block ipv6
+$IP6TABLES -P INPUT DROP
+$IP6TABLES -P FORWARD DROP
+$IP6TABLES -P OUTPUT DROP
+
+#allow loopback interface
+$IPTABLES -A INPUT -i lo -j ACCEPT
+$IPTABLES -A OUTPUT -o lo -j ACCEPT
+
+#allow established connections
+$IPTABLES -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+#allow ICMP answer packages
+#$IPTABLES -A INPUT -p icmp -m icmp --icmp-type echo-reply -j ACCEPT
+#$IPTABLES -A INPUT -p icmp -m icmp --icmp-type echo-request -j ACCEPT
+#$IPTABLES -A INPUT -p icmp -m icmp --icmp-type destination-unreachable -j ACCEPT
+
+#allow Steam
+#$IPTABLES -A INPUT -p tcp --dport 27036 -j ACCEPT
+#$IPTABLES -A INPUT -p tcp --dport 57343 -j ACCEPT
+
